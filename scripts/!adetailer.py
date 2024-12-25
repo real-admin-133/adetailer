@@ -851,6 +851,14 @@ class AfterDetailerScript(scripts.Script):
             suffix="-ad-preview" + suffix(n, "-"),
         )
 
+        for mi, m in enumerate(masks):
+            self.save_image(
+                p,
+                m,
+                condition="ad_save_masks",
+                suffix="-ad-mask" + str(mi) + suffix(n, "-")
+            )
+
         steps = len(masks)
         processed = None
         state.job_count += steps
@@ -977,6 +985,11 @@ def on_ui_settings():
     shared.opts.add_option(
         "ad_save_previews",
         shared.OptionInfo(default=False, label="Save mask previews", section=section),
+    )
+
+    shared.opts.add_option(
+        "ad_save_masks",
+        shared.OptionInfo(default=False, label="Save processed masks", section=section),
     )
 
     shared.opts.add_option(
